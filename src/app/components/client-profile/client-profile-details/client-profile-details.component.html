@@ -1,0 +1,12 @@
+<div class="details-container" *ngIf="data | async as client">
+  <div class="detail-box">
+    <h3><span class="heading">Full Name: </span> {{client.name}} {{client.lastName}}</h3>
+    <h3><span class="heading">Gender: </span>{{client.gender}}</h3>
+    <h3><span class="heading">Personal Number: </span> {{client.personalNumber}}</h3>
+  </div>
+  <div class="detail-box">
+    <h3><span class="heading">Phone Number: </span> {{client.phoneNumber}}</h3>
+    <h3><span class="heading">Legal Address: </span> {{client.legalAddress.country}}, {{client.legalAddress.city}}, {{client.legalAddress.address}}</h3>
+    <h3><span class="heading">Actual Address: </span> {{client.actualAddress.country}}, {{client.actualAddress.city}}, {{client.actualAddress.address}}</h3>
+  </div>
+</div>

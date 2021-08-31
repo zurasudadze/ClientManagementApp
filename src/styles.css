@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; overflow-x: hidden}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.row {
+  padding-bottom: 20px;
+}
+.container {
+  padding: 20px;
+}
+.top-panel {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-toolbar {
+  height: 120px;
+}

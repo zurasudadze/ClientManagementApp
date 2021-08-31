@@ -1,0 +1,9 @@
+.details-container {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.heading {
+  font-weight: 600;
+}

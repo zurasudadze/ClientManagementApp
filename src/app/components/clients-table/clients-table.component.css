@@ -1,0 +1,32 @@
+table {
+  width: 100%;
+}
+
+.icon {
+  color: #092f49;
+  font-size: 35px;
+  margin-right: 5px;
+}
+
+.icon:hover {
+  color: #14537b;
+  cursor: pointer;
+  transition: color 0.4s linear;
+}
+
+.icon-edit {
+  color: #0b530b;
+}
+
+.icon-edit:hover {
+  color: #176d17;
+  transition: color 0.4s linear;
+}
+
+.icon-delete {
+  color: #660c0c;
+}
+
+.icon-delete:hover {
+  color: #a00c0c;
+}

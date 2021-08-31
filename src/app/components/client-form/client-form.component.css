@@ -1,0 +1,24 @@
+.form-wrapper {
+  margin: 0 auto;
+  width: 1000px;
+}
+
+.mat-form-field {
+  width: 40%;
+  margin-left: 10px;
+}
+.address-box .mat-form-field {
+  width: 30%;
+}
+.image-uploader {
+  width: 30%;
+  display: inline-block;
+
+}
+ .image {
+   width: 50px;
+ }
+
+ .address-container {
+   margin-top: 20px;
+ }
