@@ -22,7 +22,6 @@ export class ClientFormComponent implements OnInit {
   id: string;
   clients: Client[];
   accountNumbersArr: number[] = [];
-  isUniqueNumber = true;
 
   constructor(private clientsService: ClientsService,
               private router: Router,
@@ -117,7 +116,7 @@ export class ClientFormComponent implements OnInit {
     client.account.forEach(acc => {
       (this.clientForm?.get('account') as FormArray).push(
         new FormGroup({
-          accountNumber: new FormControl({value: acc.accountNumber, disabled: true}, [Validators.required]),
+          accountNumber: new FormControl(acc.accountNumber, [Validators.required, CustomUniqueNumberValidator(this.accountNumbersArr)]),
           accountType: new FormControl(acc.accountType, [Validators.required]),
           currency: new FormControl(acc.currency, [Validators.required]),
           accountStatus: new FormControl(acc.accountStatus, [Validators.required]),
@@ -129,7 +128,7 @@ export class ClientFormComponent implements OnInit {
   addAccounts() {
     (this.clientForm.get('account') as FormArray).push(
       new FormGroup({
-        accountNumber: new FormControl('', [Validators.required]),
+        accountNumber: new FormControl('', [Validators.required, CustomUniqueNumberValidator(this.accountNumbersArr)]),
         accountType: new FormControl('', [Validators.required]),
         currency: new FormControl('', [Validators.required]),
         accountStatus: new FormControl('', [Validators.required]),
@@ -154,12 +153,6 @@ export class ClientFormComponent implements OnInit {
       this.updateClient()
     }
   }
-
-/*  valueChanged(e: Event) {
-    let value = (e.target as HTMLInputElement).value
-    this.isUniqueNumber = !this.accountNumbersArr.includes(+value.toLowerCase())
-    console.log(this.isUniqueNumber)
-  }*/
 
   addClient() {
     this.clientsService.addClient$(this.clientForm.value).subscribe(() => {
