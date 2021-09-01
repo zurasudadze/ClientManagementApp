@@ -182,9 +182,10 @@
             <mat-form-field appearance="outline">
               <mat-label>Account N.</mat-label>
               <input type="number" matInput formControlName="accountNumber">
-              <mat-error *ngIf="getAccountsValidity(i)">
-                This Field is Required!
+              <mat-error *ngIf="getAccountNumberControl(i)">
+                This Number Already Taken!
               </mat-error>
+
             </mat-form-field>
 
             <mat-form-field appearance="outline">

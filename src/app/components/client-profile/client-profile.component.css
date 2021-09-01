@@ -8,10 +8,13 @@
 
 .card-header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 }
-
+.card-header-container {
+  display: flex;
+  justify-content: space-between;
+}
 .card-avatar {
   width: 200px;
   height: 200px;

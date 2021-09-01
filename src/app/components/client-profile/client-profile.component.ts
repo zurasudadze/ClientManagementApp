@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {slideInAnimation} from "../animations/animations";
-import {Account, Client} from "../../models/types";
+import {Client} from "../../models/types";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {ClientsService} from "../../services/clients.service";
@@ -18,7 +18,6 @@ export class ClientProfileComponent implements OnInit, OnDestroy {
   isLoading = true;
   clientId: string
   private subscription: Subscription;
-
   constructor(
     private clientsService: ClientsService,
     private activatedRoute: ActivatedRoute) {

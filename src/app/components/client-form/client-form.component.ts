@@ -6,6 +6,7 @@ import {ClientsService} from "../../services/clients.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Client} from "../../models/types";
 import {filter, mergeMap} from "rxjs/operators";
+import {CustomUniqueNumberValidator} from "../../shared/validators/uniqueNumber.validator";
 
 @Component({
   selector: 'app-client-form',
@@ -18,7 +19,10 @@ export class ClientFormComponent implements OnInit {
   clientForm: FormGroup;
   imageName = ''
   isAddMode: boolean = true;
-  id: string
+  id: string;
+  clients: Client[];
+  accountNumbersArr: number[] = [];
+  isUniqueNumber = true;
 
   constructor(private clientsService: ClientsService,
               private router: Router,
@@ -26,6 +30,14 @@ export class ClientFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.clientsService.getClients$().subscribe(data =>{
+      this.clients = data;
+      this.clients.map(client => {
+        client.account.map(acc => {
+          this.accountNumbersArr.push(acc.accountNumber)
+        })
+      })
+    })
     this.activatedRoute.params.pipe(
       filter(({id}) => Boolean(id)),
       mergeMap(({id}) => {
@@ -80,7 +92,7 @@ export class ClientFormComponent implements OnInit {
       }),
       'account': new FormArray([
         new FormGroup({
-          accountNumber: new FormControl('', [Validators.required]),
+          accountNumber: new FormControl('', [Validators.required, CustomUniqueNumberValidator(this.accountNumbersArr)]),
           accountType: new FormControl('', [Validators.required]),
           currency: new FormControl('', [Validators.required]),
           accountStatus: new FormControl('', [Validators.required]),
@@ -105,7 +117,7 @@ export class ClientFormComponent implements OnInit {
     client.account.forEach(acc => {
       (this.clientForm?.get('account') as FormArray).push(
         new FormGroup({
-          accountNumber: new FormControl(acc.accountNumber, [Validators.required]),
+          accountNumber: new FormControl({value: acc.accountNumber, disabled: true}, [Validators.required]),
           accountType: new FormControl(acc.accountType, [Validators.required]),
           currency: new FormControl(acc.currency, [Validators.required]),
           accountStatus: new FormControl(acc.accountStatus, [Validators.required]),
@@ -142,6 +154,12 @@ export class ClientFormComponent implements OnInit {
       this.updateClient()
     }
   }
+
+/*  valueChanged(e: Event) {
+    let value = (e.target as HTMLInputElement).value
+    this.isUniqueNumber = !this.accountNumbersArr.includes(+value.toLowerCase())
+    console.log(this.isUniqueNumber)
+  }*/
 
   addClient() {
     this.clientsService.addClient$(this.clientForm.value).subscribe(() => {
@@ -210,7 +228,7 @@ export class ClientFormComponent implements OnInit {
     return this.clientForm.get('account') as FormArray
   }
 
-  getAccountsValidity(i: any) {
-    return (<FormArray>this.clientForm.get('account')).controls[i].invalid;
+  getAccountNumberControl(i: any) {
+    return (<FormArray>this.clientForm.get('account')).controls[i]?.get('accountNumber')?.value
   }
 }
