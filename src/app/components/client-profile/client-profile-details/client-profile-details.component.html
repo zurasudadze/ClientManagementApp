@@ -1,4 +1,4 @@
-<div class="details-container" *ngIf="data | async as client">
+<div class="details-container" *ngIf="client; else loading">
   <div class="detail-box">
     <h3><span class="heading">Full Name: </span> {{client.name}} {{client.lastName}}</h3>
     <h3><span class="heading">Gender: </span>{{client.gender}}</h3>
@@ -10,3 +10,6 @@
     <h3><span class="heading">Actual Address: </span> {{client.actualAddress.country}}, {{client.actualAddress.city}}, {{client.actualAddress.address}}</h3>
   </div>
 </div>
+<ng-template #loading>
+  <app-spinner isLoading="true"></app-spinner>
+</ng-template>

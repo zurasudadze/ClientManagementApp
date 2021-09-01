@@ -4,15 +4,17 @@
 }
 
 .mat-form-field {
-  width: 40%;
+  width: 47%;
   margin-left: 10px;
 }
 .address-box .mat-form-field {
-  width: 30%;
+  width: 32%;
 }
 .image-uploader {
   width: 30%;
   display: inline-block;
+  margin-left: 30px
+;
 
 }
  .image {
@@ -22,3 +24,20 @@
  .address-container {
    margin-top: 20px;
  }
+.account-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.account {
+  border: 1px solid rgba(113, 112, 112, 0.2);
+  border-radius: 10px;
+  margin: 10px 0;
+  padding-top: 15px;
+  padding-left: 30px;
+  padding-right: 0;
+
+}
+.delete-icon {
+  color: #9a1515;
+}

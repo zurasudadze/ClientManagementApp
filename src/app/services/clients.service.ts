@@ -17,7 +17,7 @@ export class ClientsService {
     return this.http.get<Client[]>(ENDPOINT_CLIENTS)
   }
 
-  getClient$(id: string | null): Observable<Client> {
+  getClient$(id: string): Observable<Client> {
     return this.http.get<Client>(`${ENDPOINT_CLIENTS}/${id}`)
   }
 
@@ -25,7 +25,7 @@ export class ClientsService {
     return this.http.post<Client>(ENDPOINT_CLIENTS, data)
   }
 
-  updateClient$(id: number, data: Client): Observable<Client> {
+  updateClient$(id: string, data: Client): Observable<Client> {
     return this.http.put<Client>(`${ENDPOINT_CLIENTS}/${id}`, data)
   }
 

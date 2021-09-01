@@ -34,15 +34,15 @@ export class ClientsTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.getClients();
-    const filterValue = localStorage.getItem('filterValue')
-    if(filterValue) {
+    const filterValue = localStorage.getItem('filterValue');
+    if (filterValue) {
+      this.filterValue = filterValue;
       this.dataSource.filter = filterValue.trim().toLowerCase();
     }
     const pageIndex = localStorage.getItem('pageIndex');
     if (pageIndex) {
       this.pageIndex = +pageIndex;
     }
-
   }
 
   ngOnDestroy(): void {
@@ -63,8 +63,8 @@ export class ClientsTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    localStorage.setItem('filterValue',filterValue);
-    this.dataSource.filter = filterValue.trim().toLowerCase();//material tables aq mushaobs ki
+    localStorage.setItem('filterValue', filterValue);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 

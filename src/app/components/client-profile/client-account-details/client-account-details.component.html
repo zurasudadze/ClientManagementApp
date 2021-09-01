@@ -23,7 +23,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions</th>
       <td mat-cell *matCellDef="let element">
-        <mat-icon class="icon icon-delete">delete</mat-icon>
+        <button mat-raised-button (click)="onToggleAccountStatus(element.accountNumber)">{{element.accountStatus === "open" ? 'Close Account' : 'Open Account'}}</button>
       </td>
     </ng-container>
 

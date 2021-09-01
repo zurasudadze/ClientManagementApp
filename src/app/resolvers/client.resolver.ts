@@ -15,7 +15,7 @@ export class ClientResolver implements Resolve<any> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> | Promise<any> | any {
-    return this.clientsService.getClient$(route.paramMap.get('id'))
+    return this.clientsService.getClient$(route.paramMap.get('id') || '')
   }
 
 }

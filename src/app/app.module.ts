@@ -17,6 +17,7 @@ import { ClientAccountDetailsComponent } from './components/client-profile/clien
 import { DeleteClientComponent } from './components/delete-client/delete-client.component';
 import {ImageUploaderComponent} from "./components/client-form/image-uploader/image-uploader.component";
 import { PaginatorComponent } from './components/clients-table/paginator/paginator.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { PaginatorComponent } from './components/clients-table/paginator/paginat
     ClientAccountDetailsComponent,
     DeleteClientComponent,
     ImageUploaderComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    SpinnerComponent
   ],
   imports: [
     HttpClientModule,

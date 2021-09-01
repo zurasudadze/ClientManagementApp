@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CustomLanguageValidator} from "../../shared/validators/language.validator";
 import {slideInAnimation} from "../animations/animations";
 import {ClientsService} from "../../services/clients.service";
@@ -18,7 +18,7 @@ export class ClientFormComponent implements OnInit {
   clientForm: FormGroup;
   imageName = ''
   isAddMode: boolean = true;
-  id: number
+  id: string
 
   constructor(private clientsService: ClientsService,
               private router: Router,
@@ -99,7 +99,18 @@ export class ClientFormComponent implements OnInit {
       'personalNumber': client.personalNumber,
       'legalAddress': client.legalAddress,
       'actualAddress': client.actualAddress,
-      'account': client.account
+    });
+
+    (this.clientForm?.get('account') as FormArray).clear();
+    client.account.forEach(acc => {
+      (this.clientForm?.get('account') as FormArray).push(
+        new FormGroup({
+          accountNumber: new FormControl(acc.accountNumber, [Validators.required]),
+          accountType: new FormControl(acc.accountType, [Validators.required]),
+          currency: new FormControl(acc.currency, [Validators.required]),
+          accountStatus: new FormControl(acc.accountStatus, [Validators.required]),
+        })
+      )
     })
   }
 
@@ -119,8 +130,7 @@ export class ClientFormComponent implements OnInit {
   }
 
   onImageUploaded(imgInfo: any) {
-    // @ts-ignore
-    this.clientForm.get('image').setValue(imgInfo.base64Img);
+    this.clientForm.get('image')?.setValue(imgInfo.base64Img);
     this.imageName = imgInfo.name;
   }
 
@@ -132,7 +142,6 @@ export class ClientFormComponent implements OnInit {
       this.updateClient()
     }
   }
-
 
   addClient() {
     this.clientsService.addClient$(this.clientForm.value).subscribe(() => {
@@ -198,15 +207,10 @@ export class ClientFormComponent implements OnInit {
   }
 
   get accountControl() {
-    // @ts-ignore
-    console.log(this.clientForm.get('account')['controls'])
-    // @ts-ignore
-
-    return this.clientForm.get('account')['controls']
+    return this.clientForm.get('account') as FormArray
   }
 
-  get accountNumberControl() {
-    return this.clientForm.get('account')?.get('accountNumber')
+  getAccountsValidity(i: any) {
+    return (<FormArray>this.clientForm.get('account')).controls[i].invalid;
   }
-
 }

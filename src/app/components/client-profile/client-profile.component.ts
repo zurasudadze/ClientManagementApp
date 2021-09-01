@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {slideInAnimation} from "../animations/animations";
-import {Client} from "../../models/types";
+import {Account, Client} from "../../models/types";
 import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
+import {Subscription} from "rxjs";
 import {ClientsService} from "../../services/clients.service";
+import {filter, mergeMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-client-profile',
@@ -11,21 +12,52 @@ import {ClientsService} from "../../services/clients.service";
   styleUrls: ['./client-profile.component.css'],
   animations: [slideInAnimation]
 })
-export class ClientProfileComponent implements OnInit {
+export class ClientProfileComponent implements OnInit, OnDestroy {
 
-  client$: Observable<Client>
+  client: Client
+  isLoading = true;
+  clientId: string
+  private subscription: Subscription;
 
   constructor(
     private clientsService: ClientsService,
-    private activatedRoute: ActivatedRoute) { }
-
-  ngOnInit():void {
-  this.activatedRoute.params.subscribe(params => {
-    console.log(params)
-   this.client$ = this.clientsService.getClient$(params.id)
-    console.log(this.client$)
-  })
-
+    private activatedRoute: ActivatedRoute) {
   }
 
+  ngOnInit(): void {
+    this.subscription = this.activatedRoute.params.pipe(
+      filter(({id}) => Boolean(id)),
+      mergeMap(({id}) => {
+        this.clientId = id
+        this.isLoading = false;
+        return this.clientsService.getClient$(id)
+      })
+    ).subscribe(client => {
+      this.client = client
+    })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
+
+  toggle(accountNumber: number) {
+    const updatedAccounts = this.client.account.map(acc => {
+      if (acc.accountNumber === accountNumber) {
+        return {
+          ...acc,
+          accountStatus: acc.accountStatus === 'open' ? 'closed' : 'open'
+        }
+      }
+      return acc
+    })
+    this.clientsService.updateClient$(this.clientId, {
+      ...this.client,
+      account: updatedAccounts
+    }).subscribe(() => {
+      this.clientsService.getClient$(this.clientId).subscribe(client => {
+        this.client = client
+      })
+    })
+  }
 }

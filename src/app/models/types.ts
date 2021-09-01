@@ -1,4 +1,4 @@
-interface Account {
+export interface Account {
   accountNumber: number;
   clientNumber: number;
   accountType: string;
@@ -6,7 +6,7 @@ interface Account {
   accountStatus: string;
 }
 
-interface ClientAddress {
+export interface ClientAddress {
   country: string;
   city: string;
   address: string;

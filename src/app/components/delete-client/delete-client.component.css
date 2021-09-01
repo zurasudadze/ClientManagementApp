@@ -1,7 +1,7 @@
 .delete-button {
   border: none;
   outline: none;
-  background: #ff6056;
+  background: #d05047;
   color: white;
   font-size: 14px;
   border-radius: 5px;
@@ -11,7 +11,7 @@
 }
 
 .delete-button:hover {
-  background: #ff413f;
+  background: #a52726;
 }
 
 .info-text {

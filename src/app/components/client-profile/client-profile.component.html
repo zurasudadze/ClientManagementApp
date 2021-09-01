@@ -1,5 +1,5 @@
 <div class="row container" @slideIn>
-  <mat-card class="client-card" *ngIf="client$ | async as client">
+  <mat-card class="client-card" *ngIf="client; else loading">
     <mat-card-header class="card-header">
       <img mat-card-avatar src="{{client.image}}"  class="card-avatar" alt="">
       <mat-card-title>{{client.name}} {{client.lastName}}</mat-card-title>
@@ -7,12 +7,15 @@
     <mat-card-content>
       <mat-tab-group mat-align-tabs="center">
         <mat-tab label="General Info" class="profile-details">
-          <app-client-profile-details [data]="client$"></app-client-profile-details>
+          <app-client-profile-details [client]="client"></app-client-profile-details>
         </mat-tab>
         <mat-tab label="Accounts">
-          <app-client-account-details [data]="client.account"></app-client-account-details>
+          <app-client-account-details [data]="client.account" (toggleAccountStatus)="toggle($event)"></app-client-account-details>
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>
   </mat-card>
+  <ng-template #loading>
+    <app-spinner isLoading="true"></app-spinner>
+  </ng-template>
 </div>

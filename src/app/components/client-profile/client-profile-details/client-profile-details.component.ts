@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
 import {Client} from "../../../models/types";
 
 @Component({
@@ -8,7 +7,7 @@ import {Client} from "../../../models/types";
   styleUrls: ['./client-profile-details.component.css']
 })
 export class ClientProfileDetailsComponent implements OnInit {
-  @Input() data: Observable<Client>
+  @Input() client: Client
   constructor() { }
 
   ngOnInit(): void {

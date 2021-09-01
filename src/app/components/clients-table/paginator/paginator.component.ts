@@ -7,7 +7,6 @@ import {MatPaginator} from '@angular/material/paginator';
   styleUrls: ['./paginator.component.css']
 })
 export class PaginatorComponent implements OnInit {
-
   @Input() length: any;
   @Input() pageSize: any;
   @Input() pageSizeOptions: any;
